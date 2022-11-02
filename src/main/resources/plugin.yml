@@ -1,0 +1,12 @@
+name: Project_stone
+version: '${project.version}'
+main: project_stone.project_stone.Project_stone
+api-version: 1.19
+prefix: [ Project Stone ]
+load: STARTUP
+authors: [ yunitrish ]
+description: to complete minecraft server environment
+commands:
+  void_anchor:
+    description: set a anchor in  the space
+    usage: /<command> <test1/test2/test3>
