@@ -8,7 +8,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitScheduler;
 import project_stone.project_stone.BasicStone;
 import project_stone.project_stone.Project_stone;
 
@@ -69,18 +68,29 @@ public class void_anchor implements CommandExecutor {
             }
         };
     }
-    public static void delayToAnchor(Player player,String name,int delayTime) {
+    public static Runnable toAnchor(final String type,Player player,String name,Location location) {
+        return () -> {
+            if(location.equals(player.getLocation())) {
+                if(BasicStone.same(type,"anchor")) {
+                    player.teleport(void_anchor.getAnchor(player, name));
+                    player.playSound(player.getLocation(), Sound.ITEM_CHORUS_FRUIT_TELEPORT, SoundCategory.HOSTILE, 1.0f, 0.2f);
+                    player.sendTitle(ChatColor.GOLD + name, ChatColor.MAGIC + "_________", 10, 10, 10);
+                }
+                else if(BasicStone.same(type,"player")) {
+                    player.teleport(Objects.requireNonNull(Bukkit.getPlayer(name)));
+                    player.playSound(player.getLocation(), Sound.ITEM_CHORUS_FRUIT_TELEPORT, SoundCategory.HOSTILE, 1.0f, 0.2f);
+                    player.sendTitle(ChatColor.GOLD + name, ChatColor.MAGIC + "_________", 10, 10, 10);
+                }
+            }
+
+        };
+    }
+    public static void delayToAnchor(Player player,String name,int delayTime,String type) {
         Location location = player.getLocation();
         for(int i=0;i<delayTime;i++) {
             BasicStone.doLater(i*20L,teleportCount(player,delayTime-i,Sound.ENTITY_ARROW_HIT_PLAYER,location));
         }
-        BasicStone.doLater(delayTime*20L, () -> {
-            if(location.equals(player.getLocation())) {
-                player.teleport(void_anchor.getAnchor(player, name));
-                player.playSound(player.getLocation(), Sound.ITEM_CHORUS_FRUIT_TELEPORT, SoundCategory.HOSTILE, 1.0f, 0.2f);
-                player.sendTitle(ChatColor.GOLD + name, ChatColor.MAGIC + "_________", 10, 10, 10);
-            }
-        });
+        BasicStone.doLater(delayTime*20L,toAnchor(type,player,name,location));
     }
     public static Location getAnchor(Player player, String name) {
         if(config.get(player.getUniqueId()+"."+name)==null) {
@@ -103,6 +113,7 @@ public class void_anchor implements CommandExecutor {
         config.set(player.getUniqueId() + "." + name + ".yaw",player.getLocation().getYaw());
         config.set(player.getUniqueId() + "." + name + ".pitch",player.getLocation().getPitch());
         void_anchor.save();
+        player.sendMessage("You had set " + ChatColor.GOLD + name + ChatColor.WHITE + " as home at" + LocationString(player));
     }
     public static void deleteAnchor(Player player, String name) {
         ConfigurationSection temp = config.getConfigurationSection(player.getUniqueId().toString());
@@ -136,9 +147,10 @@ public class void_anchor implements CommandExecutor {
             Player player = (Player) sender;
             switch (args.length){
                 case 0:
-                    player.sendMessage(ChatColor.GREEN + "help:");
-                    player.sendMessage(Project_stone.getPlugin().getName());
-                    player.sendMessage(Project_stone.getRootFolder());
+                    player.sendMessage(ChatColor.GOLD + "help:");
+                    player.sendMessage("    " + Project_stone.getPlugin().getName());
+                    player.sendMessage("    " + Project_stone.getRootFolder());
+                    return true;
                 case 1:
                     if(BasicStone.same(args[0],"list")) {
                         listAnchor(player);
@@ -146,31 +158,11 @@ public class void_anchor implements CommandExecutor {
                     }
                 case 2:
                     if(BasicStone.same(args[0],"to")) {
-                        delayToAnchor(player,args[1],4);
+                        delayToAnchor(player,args[1],4,"Anchor");
                         return true;
                     }
                     else if(BasicStone.same(args[0],"player")) {
-                        BukkitScheduler scheduler = Bukkit.getScheduler();
-                        if(Bukkit.getPlayer(args[1])==null) return true;
-                        Player target = Bukkit.getPlayer(args[1]);
-                        scheduler.runTaskLater(Project_stone.getPlugin(), () -> {
-                            player.sendTitle("3", ChatColor.MAGIC + "_____",10,10,10);
-                            player.playSound(player.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, SoundCategory.MASTER,0.4f,1.0f);
-                        }, 0L);
-                        scheduler.runTaskLater(Project_stone.getPlugin(), () -> {
-                            player.sendTitle("2", ChatColor.MAGIC + "_____",10,10,10);
-                            player.playSound(player.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, SoundCategory.MASTER,0.4f,1.0f);
-                        }, 20L);
-                        scheduler.runTaskLater(Project_stone.getPlugin(), () -> {
-                            player.sendTitle("1", ChatColor.MAGIC + "_____",10,10,10);
-                            player.playSound(player.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, SoundCategory.MASTER,0.4f,1.0f);
-                        }, 40L);
-                        scheduler.runTaskLater(Project_stone.getPlugin(), () -> {
-                            player.playSound(player.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, SoundCategory.MASTER,0.4f,1.4f);
-                            if (target != null) {
-                                player.teleport(target);
-                            }
-                        }, 60L);
+                        deleteAnchor(player,args[1]);
                         return true;
                     }
                     else if(BasicStone.same(args[0],"set")) {
