@@ -2,7 +2,7 @@ name: Project_stone
 version: '${project.version}'
 main: project_stone.project_stone.Project_stone
 api-version: 1.19
-prefix: [ Project Stone ]
+prefix: "Project Stone"
 load: STARTUP
 authors: [ yunitrish ]
 description: to complete minecraft server environment
@@ -13,4 +13,10 @@ commands:
     aliases: [va]
   fly:
     description: fly
+    usage: /<command>
+  hat:
+    description: hat
+    usage: /<command>
+  light:
+    description: light
     usage: /<command>

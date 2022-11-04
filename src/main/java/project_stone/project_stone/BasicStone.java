@@ -24,6 +24,12 @@ public class BasicStone {
     public static boolean same(String x, String y) {
         return x.equalsIgnoreCase(y);
     }
+    public static boolean same(String x, String[] y) {
+        for (String s : y) {
+            if (x.equalsIgnoreCase(s)) return true;
+        }
+        return false;
+    }
     public static List<String> playerNames() {
         return  Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
     }

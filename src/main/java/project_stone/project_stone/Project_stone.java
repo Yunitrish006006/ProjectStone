@@ -4,6 +4,8 @@ import project_stone.project_stone.VoidTech.Anchor;
 import project_stone.project_stone.VoidTech.AnchorFinder;
 import project_stone.project_stone.VoidTech.void_anchor;
 import project_stone.project_stone.commands.fly;
+import project_stone.project_stone.commands.hat;
+import project_stone.project_stone.commands.light;
 import project_stone.project_stone.events.OnPlayerDeath;
 import project_stone.project_stone.events.OnPlayerFished;
 
@@ -26,6 +28,8 @@ public final class Project_stone extends JavaPlugin {
         Objects.requireNonNull(getCommand("void_anchor")).setExecutor(new void_anchor());
         Objects.requireNonNull(getCommand("void_anchor")).setTabCompleter(new AnchorFinder());
         Objects.requireNonNull(getCommand("fly")).setExecutor(new fly());
+        Objects.requireNonNull(getCommand("hat")).setExecutor(new hat());
+        Objects.requireNonNull(getCommand("light")).setExecutor(new light());
         getServer().getPluginManager().registerEvents(new OnPlayerFished(),this);
         getServer().getPluginManager().registerEvents(new OnPlayerDeath(),this);
     }

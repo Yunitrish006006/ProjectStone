@@ -1,6 +1,5 @@
 package project_stone.project_stone.VoidTech;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -9,7 +8,6 @@ import org.bukkit.entity.Player;
 import project_stone.project_stone.BasicStone;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 public class AnchorFinder implements TabCompleter {
     @Override
@@ -20,9 +18,9 @@ public class AnchorFinder implements TabCompleter {
                 case 1:
                     List<String> options = new ArrayList<>();
                     options.add("to");
+                    options.add("public");
                     options.add("player");
                     options.add("add");
-                    options.add("death");
                     options.add("list");
                     options.add("set");
                     options.add("del");
@@ -35,6 +33,9 @@ public class AnchorFinder implements TabCompleter {
                     }
                     else if(BasicStone.same(args[0],"set")){
                         return Anchor.getOwnedAnchorNameList(player);
+                    }
+                    else if(BasicStone.same(args[0],"public")) {
+                        return Anchor.getPublicAnchorNameList();
                     }
                     else if(BasicStone.same(args[0],"del")){
                         return Anchor.getOwnedAnchorNameList(player);
@@ -51,6 +52,40 @@ public class AnchorFinder implements TabCompleter {
                         random_id.add(x.toString());
                         return random_id;
                     }
+                case 3: {
+                    if(BasicStone.same(args[0],"set")){
+                        if(BasicStone.same(args[1],Anchor.getOwnedAnchorNameList(player).toArray(new String[0]))){
+                            List<String> temp = new ArrayList<>();
+                            temp.add("gravity");
+                            temp.add("purview");
+                            temp.add("wait_time");
+                            return temp;
+                        }
+                    }
+                }
+                case 4: {
+                    if(BasicStone.same(args[0],"set")){
+                        if(BasicStone.same(args[2],"gravity")){
+                            List<String> t3 = new ArrayList<>();
+                            t3.add("true");
+                            t3.add("false");
+                            return t3;
+                        }
+                        else if(BasicStone.same(args[2],"purview")){
+                            List<String> t3 = new ArrayList<String>(){};
+                            t3.add("public");
+                            t3.add("private");
+                            return t3;
+                        }
+                        else if(BasicStone.same(args[2],"wait_time")){
+                            List<String> t3 = new ArrayList<String>(){};
+                            t3.add("1");
+                            t3.add("2");
+                            t3.add("3");
+                            return t3;
+                        }
+                    }
+                }
             }
         }
         return new ArrayList<>();

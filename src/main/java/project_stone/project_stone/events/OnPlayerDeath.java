@@ -11,8 +11,8 @@ public class OnPlayerDeath implements Listener {
     @EventHandler
     public void RecordDeathPoint(PlayerDeathEvent event) {
         Player player = event.getEntity();
-        Anchor temp = new Anchor("death",player);
-        temp.add();
+        Anchor temp = new Anchor("death_point_"+player.getName(),player);
+        temp.canEdit(player).add();
         player.sendMessage(ChatColor.GOLD + "Death point record at" + "\n" +temp.getLocationInformation());
     }
 }

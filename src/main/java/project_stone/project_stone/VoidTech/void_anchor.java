@@ -19,12 +19,13 @@ public class void_anchor implements CommandExecutor {
         if(sender instanceof Player) {
             Player player = (Player) sender;
             switch (args.length){
-                case 0:
+                case 0: {
                     player.sendMessage(ChatColor.GOLD + "help:");
                     player.sendMessage("  " + Project_stone.getPlugin().getName());
                     player.sendMessage("  " + Project_stone.getRootFolder());
                     return true;
-                case 1:
+                }
+                case 1: {
                     if(BasicStone.same(args[0],"list")) {
                         List<String> points = getOwnedAnchorNameList(player);
                         for(int i=0;i<getOwnedAnchorNameList(player).size();i++) {
@@ -32,7 +33,9 @@ public class void_anchor implements CommandExecutor {
                         }
                         return true;
                     }
-                case 2:
+                }
+
+                case 2: {
                     if(BasicStone.same(args[0],"to")) {
                         new Anchor().get(args[1]).delayTo(player);
                         return true;
@@ -41,14 +44,47 @@ public class void_anchor implements CommandExecutor {
                         new Anchor("temp", Objects.requireNonNull(Bukkit.getPlayer(args[1]))).delayTo(player);
                         return true;
                     }
+                    else if(BasicStone.same(args[0],"public")) {
+                        new Anchor().get(args[1]).delayTo(player);
+                        return true;
+                    }
                     else if(BasicStone.same(args[0],"add")) {
-                        player.sendMessage(new Anchor(args[1],player).add());
+                        player.sendMessage(new Anchor(args[1],player).canEdit(player).add());
                         return true;
                     }
                     else if(BasicStone.same(args[0],"del")) {
                         player.sendMessage(new Anchor().get(args[1]).del());
                         return true;
                     }
+                }
+                case 3: {
+                    if (BasicStone.same(args[0], "set")) {
+                        Anchor temp = new Anchor().get(args[1]);
+                        if (BasicStone.same(args[2], new String[]{"public", "private"})) {
+                            temp.setPurview(args[2]);
+                        }
+                        return true;
+                    }
+                }
+                case 4: {
+                    if(BasicStone.same(args[0],"set")) {
+                        Anchor temp = new Anchor().get(args[1]);
+                        if(BasicStone.same(args[2],"gravity")){
+                            if(BasicStone.same(args[3],"true")) temp.setGravity(true);
+                            else if(BasicStone.same(args[3],"false")) temp.setGravity(false);
+                            return true;
+                        }
+                        else if(BasicStone.same(args[2],"purview")){
+                            if(BasicStone.same(args[3],"public")) temp.setPurview("public");
+                            else if(BasicStone.same(args[3],"private")) temp.setPurview("private");
+                            return true;
+                        }
+                        else if(BasicStone.same(args[2],"wait_time")){
+                            temp.setWait_time(Integer.parseInt(args[3]));
+                            return true;
+                        }
+                    }
+                }
             }
         }
         return false;

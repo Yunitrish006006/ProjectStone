@@ -73,7 +73,7 @@ public class Anchor {
         uuid = UUID.randomUUID().toString();
     }
     public Anchor(String name,Location location) {
-        world = "world";
+        world = Objects.requireNonNull(location.getWorld()).getName();
         x = location.getX();
         y = location.getY();
         z = location.getZ();
@@ -87,7 +87,7 @@ public class Anchor {
         uuid = UUID.randomUUID().toString();
     }
     public Anchor(String name,Player player) {
-        world = "world";
+        world = player.getWorld().getName();
         x = player.getLocation().getX();
         y = player.getLocation().getY();
         z = player.getLocation().getZ();
@@ -97,18 +97,29 @@ public class Anchor {
         purview = "private";
         anchor_name = name;
         wait_time = 3;
-        owner = "world";
+        owner = player.getName();
         uuid = player.getUniqueId().toString();
     }
     /*method===============================================================================*/
+    public Anchor canEdit(Player player) {
+        if(uuid.equalsIgnoreCase(player.getUniqueId().toString())) return this;
+        else return null;
+    }
+    public Anchor canTeleport(Player player) {
+        if(uuid.equalsIgnoreCase(player.getUniqueId().toString()) || BasicStone.same(purview,"public")) return this;
+        return null;
+    }
     public void setGravity(boolean value) {
         gravity = value;
+        add();
     }
     public void setWait_time(int value) {
         wait_time = value;
+        add();
     }
     public void setPurview(String value) {
         purview = value;
+        add();
     }
     public String getLocationInformation() {
         String result = "";
@@ -119,18 +130,10 @@ public class Anchor {
         return result;
     }
     public void to(Player player) {
-        if(gravity) {
-            if(safe()) {
-                player.teleport(getHighestBlockAt());
-                player.playSound(player.getLocation(), Sound.ITEM_CHORUS_FRUIT_TELEPORT, SoundCategory.HOSTILE, 1.0f, 0.2f);
-                player.sendTitle(ChatColor.GOLD + anchor_name, ChatColor.MAGIC + "_________", 10, 10, 10);
-            }
-        }
-        else {
-            player.teleport(getLocation());
-            player.playSound(player.getLocation(), Sound.ITEM_CHORUS_FRUIT_TELEPORT, SoundCategory.HOSTILE, 1.0f, 0.2f);
-            player.sendTitle(ChatColor.GOLD + anchor_name, ChatColor.MAGIC + "_________", 10, 10, 10);
-        }
+        if(gravity) player.teleport(getHighestBlockAt().safe().getLocation());
+        else player.teleport(this.getLocation());
+        player.playSound(player.getLocation(), Sound.ITEM_CHORUS_FRUIT_TELEPORT, SoundCategory.HOSTILE, 1.0f, 0.2f);
+        player.sendTitle(ChatColor.GOLD + anchor_name, ChatColor.MAGIC + "_________", 10, 10, 10);
     }
     public void delayTo(Player player) {
         Location location = player.getLocation();
@@ -147,25 +150,26 @@ public class Anchor {
             }
         };
     }
-    public Location getHighestBlockAt() {
+    public Anchor getHighestBlockAt() {
         Location finalPlace = getLocation();
         int maxHeight = Objects.requireNonNull(Bukkit.getServer().getWorld(world)).getMaxHeight();
         for(int i = (int) Math.round(Math.ceil(y)); i>-64; i--) {
-            if(new Anchor("temp",finalPlace.add(0,-1,0)).safe()) {
+            if(new Anchor("temp",finalPlace.add(0,-1,0)).safe()!=null) {
                 finalPlace = finalPlace.add(0,-1,0);
             }
             else {
-                return finalPlace.add(0,1,0);
+                return new Anchor("temp",finalPlace.add(0,1,0));
             }
         }
         return null;
     }
-    public boolean safe() {
+    public Anchor safe() {
         Location target = getLocation();
-        Block body_up = target.getWorld().getBlockAt((int) x, (int) (y+1), (int) z);
+        Block body_up = Objects.requireNonNull(target.getWorld()).getBlockAt((int) x, (int) (y+1), (int) z);
         Block body_down = target.getWorld().getBlockAt((int) x, (int) (y), (int) z);
         Block below = target.getWorld().getBlockAt((int) x, (int) (y-1), (int) z);
-        return !(below.getType().isSolid() || !body_up.isEmpty() || !body_down.isEmpty());
+        if(!(below.getType().isSolid() || !body_up.isEmpty() || !body_down.isEmpty())) return this;
+        else return null;
     }
     public Location getLocation() {
         return new Location(Bukkit.getWorld(world),x,y,z,yaw,pitch);
@@ -212,6 +216,17 @@ public class Anchor {
         for (String s : allAnchorName) {
             if (uuid.equals((new Anchor().get(s)).uuid)) {
                 result.add(s);
+            }
+        }
+        return result;
+    }
+    public static List<String> getPublicAnchorNameList() {
+        List<String> allAnchorName = getAnchorNameList();
+        List<String> result = new ArrayList<>();
+        for (String s : allAnchorName) {
+            Anchor temp = new Anchor().get(s);
+            if (temp.purview.equalsIgnoreCase("public")) {
+                result.add(temp.anchor_name);
             }
         }
         return result;
