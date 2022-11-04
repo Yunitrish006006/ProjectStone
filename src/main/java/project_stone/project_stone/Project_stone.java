@@ -1,5 +1,6 @@
 package project_stone.project_stone;
 import org.bukkit.plugin.java.JavaPlugin;
+import project_stone.project_stone.DTech.onShoot;
 import project_stone.project_stone.VoidTech.Anchor;
 import project_stone.project_stone.VoidTech.AnchorFinder;
 import project_stone.project_stone.VoidTech.void_anchor;
@@ -32,6 +33,7 @@ public final class Project_stone extends JavaPlugin {
         Objects.requireNonNull(getCommand("light")).setExecutor(new light());
         getServer().getPluginManager().registerEvents(new OnPlayerFished(),this);
         getServer().getPluginManager().registerEvents(new OnPlayerDeath(),this);
+        getServer().getPluginManager().registerEvents(new onShoot(),this);
     }
 
     @Override

@@ -12,7 +12,9 @@ public class light implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(sender instanceof Player) {
             Player player = (Player) sender;
-            player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION,1000000,255,false,false,false));
+            if(!player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION,1000000,255,false,false,false));
+            else player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+            return true;
         }
         return false;
     }

@@ -103,21 +103,30 @@ public class Anchor {
     /*method===============================================================================*/
     public Anchor canEdit(Player player) {
         if(uuid.equalsIgnoreCase(player.getUniqueId().toString())) return this;
-        else return null;
+        else {
+            Objects.requireNonNull(Bukkit.getPlayer(owner)).sendMessage(ChatColor.RED + "Can't edit, please contact the owner of Anchor");
+            return null;
+        }
     }
     public Anchor canTeleport(Player player) {
-        if(uuid.equalsIgnoreCase(player.getUniqueId().toString()) || BasicStone.same(purview,"public")) return this;
+        if(uuid.equalsIgnoreCase(player.getUniqueId().toString()) || purview.equalsIgnoreCase("public")) return this;
         return null;
     }
     public void setGravity(boolean value) {
-        gravity = value;
-        add();
+        if(world.equalsIgnoreCase("world")) {
+            gravity = value;
+            add();
+            Objects.requireNonNull(Bukkit.getPlayer(owner)).sendMessage(ChatColor.GREEN + "Set"+anchor_name+"'s Gravity to True");
+        }
+        Objects.requireNonNull(Bukkit.getPlayer(owner)).sendMessage(ChatColor.RED + "Can't set gravity in "+world+"!");
     }
     public void setWait_time(int value) {
+        Objects.requireNonNull(Bukkit.getPlayer(owner)).sendMessage(ChatColor.GREEN + "Set"+anchor_name+"'s WaitTime to " + value);
         wait_time = value;
         add();
     }
     public void setPurview(String value) {
+        Objects.requireNonNull(Bukkit.getPlayer(owner)).sendMessage(ChatColor.GREEN + "Set"+anchor_name+"'s Purview to " + value);
         purview = value;
         add();
     }
@@ -138,27 +147,27 @@ public class Anchor {
     public void delayTo(Player player) {
         Location location = player.getLocation();
         for(int i=0;i<wait_time;i++) {
-            BasicStone.doLater(i*20L,counter(location,player,wait_time-i));
+            int finalI = i;
+            BasicStone.doLater(i*20L,()->counter(location,player,wait_time- finalI));
         }
         BasicStone.doLater(wait_time * 20L, () -> to(player));
     }
-    public Runnable counter(Location ori_location,Player player,int count_down) {
-        return () -> {
-            if(ori_location.equals(player.getLocation())) {
-                player.sendTitle("" + count_down, ChatColor.MAGIC + "_____",10,10,10);
-                player.playSound(player.getLocation(),Sound.ENTITY_ARROW_HIT_PLAYER, SoundCategory.MASTER,0.4f,1.0f);
-            }
-        };
+    public void counter(Location ori_location,Player player,int count_down) {
+        if(ori_location.equals(player.getLocation())) {
+            player.sendTitle("" + count_down, ChatColor.MAGIC + "_____",10,10,10);
+            player.playSound(player.getLocation(),Sound.ENTITY_ARROW_HIT_PLAYER, SoundCategory.MASTER,0.4f,1.0f);
+        }
     }
     public Anchor getHighestBlockAt() {
         Location finalPlace = getLocation();
         int maxHeight = Objects.requireNonNull(Bukkit.getServer().getWorld(world)).getMaxHeight();
         for(int i = (int) Math.round(Math.ceil(y)); i>-64; i--) {
-            if(new Anchor("temp",finalPlace.add(0,-1,0)).safe()!=null) {
-                finalPlace = finalPlace.add(0,-1,0);
+            if(new Anchor("temp",finalPlace.add(0,-0.5,0)).safe()!=null) {
+                finalPlace = finalPlace.add(0,0.5,0);
             }
             else {
-                return new Anchor("temp",finalPlace.add(0,1,0));
+                this.setLocation(finalPlace.add(0,1,0));
+                return this;
             }
         }
         return null;
@@ -169,7 +178,16 @@ public class Anchor {
         Block body_down = target.getWorld().getBlockAt((int) x, (int) (y), (int) z);
         Block below = target.getWorld().getBlockAt((int) x, (int) (y-1), (int) z);
         if(!(below.getType().isSolid() || !body_up.isEmpty() || !body_down.isEmpty())) return this;
-        else return null;
+        else {
+            Objects.requireNonNull(Bukkit.getPlayer(owner)).sendMessage(ChatColor.RED + "Destination is not safe at all,thus we cancel teleport");
+            return null;
+        }
+    }
+    public void setLocation(Location location){
+        this.x = location.getX();
+        this.y = location.getY();
+        this.z = location.getZ();
+        this.world = Objects.requireNonNull(location.getWorld()).getName();
     }
     public Location getLocation() {
         return new Location(Bukkit.getWorld(world),x,y,z,yaw,pitch);

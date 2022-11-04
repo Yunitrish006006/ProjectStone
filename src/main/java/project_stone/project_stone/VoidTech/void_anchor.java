@@ -53,7 +53,7 @@ public class void_anchor implements CommandExecutor {
                         return true;
                     }
                     else if(BasicStone.same(args[0],"del")) {
-                        player.sendMessage(new Anchor().get(args[1]).del());
+                        player.sendMessage(new Anchor().get(args[1]).canEdit(player).del());
                         return true;
                     }
                 }
