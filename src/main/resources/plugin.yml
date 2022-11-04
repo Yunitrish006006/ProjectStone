@@ -9,4 +9,8 @@ description: to complete minecraft server environment
 commands:
   void_anchor:
     description: set a anchor in  the space
-    usage: /<command> <test1/test2/test3>
+    usage: /<command>
+    aliases: [va]
+  fly:
+    description: fly
+    usage: /<command>

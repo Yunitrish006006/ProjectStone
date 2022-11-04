@@ -1,0 +1,19 @@
+{
+  "example_1":
+  {
+    "event":"message",
+    "value": {
+      "player": "UUID",
+      "content": "message contents"
+    }
+  },
+  "example_2":
+  {
+    "event":"tp",
+    "value": {
+      "player": "UUID",
+      "target_type": "player/mob/animal",
+      "target": "target.name"
+    }
+  }
+}

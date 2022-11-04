@@ -1,7 +1,9 @@
 package project_stone.project_stone;
 import org.bukkit.plugin.java.JavaPlugin;
-import project_stone.project_stone.VoidSystem.AnchorFinder;
-import project_stone.project_stone.VoidSystem.void_anchor;
+import project_stone.project_stone.VoidTech.Anchor;
+import project_stone.project_stone.VoidTech.AnchorFinder;
+import project_stone.project_stone.VoidTech.void_anchor;
+import project_stone.project_stone.commands.fly;
 import project_stone.project_stone.events.OnPlayerDeath;
 import project_stone.project_stone.events.OnPlayerFished;
 
@@ -20,12 +22,13 @@ public final class Project_stone extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         this.saveDefaultConfig();
+        Anchor.initialize();
         Objects.requireNonNull(getCommand("void_anchor")).setExecutor(new void_anchor());
         Objects.requireNonNull(getCommand("void_anchor")).setTabCompleter(new AnchorFinder());
-        void_anchor.initialize();
+        Objects.requireNonNull(getCommand("fly")).setExecutor(new fly());
         getServer().getPluginManager().registerEvents(new OnPlayerFished(),this);
         getServer().getPluginManager().registerEvents(new OnPlayerDeath(),this);
-        }
+    }
 
     @Override
     public void onDisable() {

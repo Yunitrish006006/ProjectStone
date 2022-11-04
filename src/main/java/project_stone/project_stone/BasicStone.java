@@ -9,12 +9,18 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitScheduler;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BasicStone {
+    public static List<String> getPlayerList() {
+        Collection<? extends Player> players = Bukkit.getOnlinePlayers();
+        List<String> names = new ArrayList<>();
+        for (Player p : players) {
+            names.add(p.getName());
+        }
+        return names;
+    }
     public static boolean same(String x, String y) {
         return x.equalsIgnoreCase(y);
     }
@@ -25,7 +31,6 @@ public class BasicStone {
         BukkitScheduler scheduler = Bukkit.getScheduler();
         scheduler.runTaskLater(Project_stone.getPlugin(),content,time);
     }
-
     public static ItemStack[] hammers() {
         return new ItemStack[]{
                 wooden_hammer(),

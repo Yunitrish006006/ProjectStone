@@ -24,8 +24,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -40,7 +40,7 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <outputFile>D:\minecraft\test_server\plugins\project_stone-1.0beta.jar</outputFile>
+                            <outputFile>D:\minecraft\severs\plugins\project_stone-1.0beta.jar</outputFile>
                         </configuration>
                     </execution>
                 </executions>
