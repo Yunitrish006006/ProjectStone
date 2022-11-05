@@ -40,7 +40,7 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <outputFile>D:\minecraft\severs\plugins\project_stone-1.0beta.jar</outputFile>
+                            <outputFile>D:\minecraft\test_server\plugins\project_stone.jar</outputFile>
                         </configuration>
                     </execution>
                 </executions>

@@ -37,7 +37,7 @@ public class void_anchor implements CommandExecutor {
 
                 case 2: {
                     if(BasicStone.same(args[0],"to")) {
-                        new Anchor().get(args[1]).delayTo(player);
+                        new Anchor().get(args[1]).canTeleport(player).delayTo(player);
                         return true;
                     }
                     else if(BasicStone.same(args[0],"player")) {

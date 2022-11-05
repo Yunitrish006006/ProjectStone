@@ -20,3 +20,6 @@ commands:
   light:
     description: light
     usage: /<command>
+  System:
+    description: system values
+    usage: /<command>

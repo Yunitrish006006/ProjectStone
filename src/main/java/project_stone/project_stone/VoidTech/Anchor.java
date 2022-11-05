@@ -66,9 +66,9 @@ public class Anchor {
         yaw = 0;
         pitch = 0;
         gravity = false;
-        purview = "public";
+        purview = "none";
         anchor_name = "temp";
-        wait_time = 3;
+        wait_time = 0;
         owner = "world";
         uuid = UUID.randomUUID().toString();
     }
@@ -102,6 +102,11 @@ public class Anchor {
     }
     /*method===============================================================================*/
     public Anchor canEdit(Player player) {
+        if(purview.equalsIgnoreCase("none")) {
+            player.sendMessage(ChatColor.RED+"You have no permission to do this action!");
+            player.sendMessage(ChatColor.MAGIC+"我肏你媽");
+            return new Anchor();
+        }
         if(uuid.equalsIgnoreCase(player.getUniqueId().toString())) return this;
         else {
             Objects.requireNonNull(Bukkit.getPlayer(owner)).sendMessage(ChatColor.RED + "Can't edit, please contact the owner of Anchor");
@@ -109,6 +114,11 @@ public class Anchor {
         }
     }
     public Anchor canTeleport(Player player) {
+        if(purview.equalsIgnoreCase("none")) {
+            player.sendMessage(ChatColor.RED+"You have no permission to do this action!");
+            player.sendMessage(ChatColor.MAGIC+"我肏你媽");
+            return new Anchor();
+        }
         if(uuid.equalsIgnoreCase(player.getUniqueId().toString()) || purview.equalsIgnoreCase("public")) return this;
         return null;
     }
