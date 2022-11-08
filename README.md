@@ -1,7 +1,16 @@
 # ProjectStone
 ### a basic spigot extension
 
-#### this plugin provide mutiple small function for private server
+#### this plugin provide multiple small function for private server
+- [x] for private server
+- [ ] for server over 100+ players
+
+| commands     | shorthand |              usage               |
+|--------------|-----------|:--------------------------------:|
+| /hat         |           | wear the thing on your main hand |
+| /light       |           |  open the night vision function  |
+| /fly         |           |       toggle fly function        |
+| /void_anchor | /va       |      teleport & home system      |
 
 > ## including:
 > ### night vision - Light Tech:
