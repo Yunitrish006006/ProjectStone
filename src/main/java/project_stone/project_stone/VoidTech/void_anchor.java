@@ -83,6 +83,10 @@ public class void_anchor implements CommandExecutor {
                             temp.setWait_time(Integer.parseInt(args[3]));
                             return true;
                         }
+                        else if(match(args[2],"name")){
+                            temp.setAnchor_name(args[3]);
+                            return true;
+                        }
                     }
                 }
             }

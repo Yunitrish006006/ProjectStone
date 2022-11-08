@@ -24,15 +24,21 @@ public class Config {
     public static FileConfiguration getConfig() {
         return Project_stone.getPlugin().getConfig();
     }
-    public static String getValue(String path) {
-        if(getConfig().get(path) != null) return Objects.requireNonNull(getConfig().get(path)).toString();
-        else return "false";
-    }
     public static void saveConfig() {
         Project_stone.getPlugin().saveConfig();
     }
     public static void reloadFile() {
         Project_stone.getPlugin().reloadConfig();
+    }
+    public static String getString(String path) {
+        return getConfig().get(path,"None").toString();
+    }
+    public static int getInteger(String path) {
+        if(getConfig().get(path) != null) return Integer.parseInt(Objects.requireNonNull(getConfig().get(path)).toString());
+        else return 0;
+    }
+    public static boolean getBoolean(String path) {
+        return getConfig().get(path) == "true";
     }
     /*config---methods---------------------------------------------------------*/
     public static void savePointToPlayer(Player player, Location target, String index) {
@@ -43,15 +49,11 @@ public class Config {
         saveConfig();
     }
     public static Location getPointFromPlayer(Player player,String index) {
-        doLater(10L,() -> {
-            getConfig().set(player.getUniqueId()+"."+index, null);
-            saveConfig();
-        });
         return new Location(
-                Bukkit.getWorld(getValue(player.getUniqueId()+"."+index+".world")),
-                Double.parseDouble(getValue(player.getUniqueId()+"."+index+".X")),
-                Double.parseDouble(getValue(player.getUniqueId()+"."+index+".Y")),
-                Double.parseDouble(getValue(player.getUniqueId()+"."+index+".Z"))
+                Bukkit.getWorld(getString(player.getUniqueId()+"."+index+".world")),
+                getInteger(player.getUniqueId()+"."+index+".X"),
+                getInteger(player.getUniqueId()+"."+index+".Y"),
+                getInteger(player.getUniqueId()+"."+index+".Z")
         );
     }
     public static void removePointFromPlayer(Player player,String index) {
@@ -82,7 +84,7 @@ public class Config {
         });
     }
     public static boolean getTriggeredFromPlayer(Player player,String index) {
-        return Boolean.parseBoolean(getValue(player.getUniqueId()+".Triggered."+index));
+        return getBoolean(player.getUniqueId()+".Triggered."+index);
     }
     /*---------------------------------------------------------------*/
     public static List<String> getPlayerList() {

@@ -123,6 +123,7 @@ public class Anchor {
         if(uuid.equalsIgnoreCase(player.getUniqueId().toString()) || purview.equalsIgnoreCase("public")) return this;
         return null;
     }
+
     public void setGravity(boolean value) {
         if(world.equalsIgnoreCase("world")) {
             gravity = value;
@@ -141,6 +142,12 @@ public class Anchor {
         purview = value;
         add();
     }
+    public void setAnchor_name(String value) {
+        Objects.requireNonNull(Bukkit.getPlayer(owner)).sendMessage(ChatColor.GREEN + "Update"+anchor_name+"'s name to " + value);
+        anchor_name = value;
+        add();
+    }
+
     public String getLocationInformation() {
         String result = "";
         result += ChatColor.GOLD + " " + anchor_name;

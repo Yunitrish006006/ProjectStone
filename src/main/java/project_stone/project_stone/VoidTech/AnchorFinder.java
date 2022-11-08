@@ -62,6 +62,7 @@ public class AnchorFinder implements TabCompleter {
                             temp.add("gravity");
                             temp.add("purview");
                             temp.add("wait_time");
+                            temp.add("name");
                             return temp;
                         }
                     }
