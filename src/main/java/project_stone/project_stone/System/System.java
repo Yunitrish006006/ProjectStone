@@ -1,4 +1,4 @@
-package project_stone.project_stone.commands;
+package project_stone.project_stone.System;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

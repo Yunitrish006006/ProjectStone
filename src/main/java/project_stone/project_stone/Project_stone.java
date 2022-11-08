@@ -1,11 +1,12 @@
 package project_stone.project_stone;
 import org.bukkit.plugin.java.JavaPlugin;
 import project_stone.project_stone.DTech.onShoot;
+import project_stone.project_stone.System.SystemTabCompleter;
 import project_stone.project_stone.VoidTech.Anchor;
 import project_stone.project_stone.VoidTech.AnchorFinder;
 import project_stone.project_stone.VoidTech.tools.void_wand.OnUsingVoidWand;
 import project_stone.project_stone.VoidTech.void_anchor;
-import project_stone.project_stone.commands.System;
+import project_stone.project_stone.System.System;
 import project_stone.project_stone.commands.fly;
 import project_stone.project_stone.commands.hat;
 import project_stone.project_stone.commands.light;
@@ -35,6 +36,7 @@ public final class Project_stone extends JavaPlugin {
         Objects.requireNonNull(getCommand("hat")).setExecutor(new hat());
         Objects.requireNonNull(getCommand("light")).setExecutor(new light());
         Objects.requireNonNull(getCommand("system")).setExecutor(new System());
+        Objects.requireNonNull(getCommand("system")).setTabCompleter(new SystemTabCompleter());
         getServer().getPluginManager().registerEvents(new OnPlayerFished(),this);
         getServer().getPluginManager().registerEvents(new OnPlayerDeath(),this);
         getServer().getPluginManager().registerEvents(new onShoot(),this);

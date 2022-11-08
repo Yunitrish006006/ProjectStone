@@ -143,6 +143,7 @@ public class Anchor {
         add();
     }
     public void setAnchor_name(String value) {
+        //0987301813
         del();
         Objects.requireNonNull(Bukkit.getPlayer(owner)).sendMessage(ChatColor.GREEN + "Update"+anchor_name+"'s name to " + value);
         anchor_name = value;
