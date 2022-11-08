@@ -36,26 +36,26 @@
 >> to delete the point you want
 > 
 >  `/va set <name of point> <options> <value>`
->>>## options:
->>> ### purview:
->>> * #### public:
->>>  let the point visible to others
->>> * #### private:
->>>  the default value upon u create the point
->>>
->>> ### wait_time:
->>> * #### any integer values:
->>>  the destination time before you teleport to the destination
->>> 
->>>  once you move in waiting
->>> 
->>>  the teleport will be canceled
->>>
->>> ### gravity:
->>> * #### true/false:
->>>  to switch whether to teleport to the highest block under the point you set on Y
->>> 
->>>  #caution! this is only available in over-world
->>> ### name:
->>>  * #### value:
->>>   switch the name of the point
+>>## options:
+>> ### purview:
+>> * #### public:
+>>  let the point visible to others
+>> * #### private:
+>>  the default value upon u create the point
+>>
+>> ### wait_time:
+>> * #### any integer values:
+>>  the destination time before you teleport to the destination
+>> 
+>>  once you move in waiting
+>> 
+>>  the teleport will be canceled
+>>
+>> ### gravity:
+>> * #### true/false:
+>>  to switch whether to teleport to the highest block under the point you set on Y
+>> 
+>>  #caution! this is only available in over-world
+>> ### name:
+>>  * #### value:
+>>   switch the name of the point
