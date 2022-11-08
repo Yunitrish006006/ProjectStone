@@ -34,6 +34,7 @@
 > 
 > `/va del <name of point>`
 >> to delete the point you want
+> 
 >  `/va set <name of point> <options> <value>`
 >>>## options:
 >>> ### purview:
