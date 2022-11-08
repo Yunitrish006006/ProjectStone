@@ -1,42 +1,15 @@
-package project_stone.project_stone;
+package project_stone.project_stone.API;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scheduler.BukkitScheduler;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Arrays;
+import java.util.Objects;
 
-public class BasicStone {
-    public static List<String> getPlayerList() {
-        Collection<? extends Player> players = Bukkit.getOnlinePlayers();
-        List<String> names = new ArrayList<>();
-        for (Player p : players) {
-            names.add(p.getName());
-        }
-        return names;
-    }
-    public static boolean same(String x, String y) {
-        return x.equalsIgnoreCase(y);
-    }
-    public static boolean same(String x, String[] y) {
-        for (String s : y) {
-            if (x.equalsIgnoreCase(s)) return true;
-        }
-        return false;
-    }
-    public static List<String> playerNames() {
-        return  Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
-    }
-    public static void doLater(Long time,Runnable content) {
-        BukkitScheduler scheduler = Bukkit.getScheduler();
-        scheduler.runTaskLater(Project_stone.getPlugin(),content,time);
-    }
+public class ItemGroups {
     public static ItemStack[] hammers() {
         return new ItemStack[]{
                 wooden_hammer(),

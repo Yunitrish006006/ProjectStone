@@ -9,7 +9,7 @@ import org.bukkit.event.entity.ItemSpawnEvent;
 import java.util.Arrays;
 import java.util.List;
 
-import static project_stone.project_stone.BasicStone.fishes;
+import static project_stone.project_stone.API.ItemGroups.fishes;
 
 public class OnPlayerFished implements Listener {
     @EventHandler

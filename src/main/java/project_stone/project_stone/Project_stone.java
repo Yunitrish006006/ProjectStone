@@ -3,6 +3,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import project_stone.project_stone.DTech.onShoot;
 import project_stone.project_stone.VoidTech.Anchor;
 import project_stone.project_stone.VoidTech.AnchorFinder;
+import project_stone.project_stone.VoidTech.tools.void_wand.OnUsingVoidWand;
 import project_stone.project_stone.VoidTech.void_anchor;
 import project_stone.project_stone.commands.System;
 import project_stone.project_stone.commands.fly;
@@ -38,6 +39,7 @@ public final class Project_stone extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new OnPlayerDeath(),this);
         getServer().getPluginManager().registerEvents(new onShoot(),this);
         getServer().getPluginManager().registerEvents(new OnCreeperExplode(),this);
+        getServer().getPluginManager().registerEvents(new OnUsingVoidWand(),this);
     }
 
     @Override

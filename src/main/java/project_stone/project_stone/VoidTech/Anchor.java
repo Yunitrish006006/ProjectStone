@@ -5,12 +5,13 @@ import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import project_stone.project_stone.BasicStone;
 import project_stone.project_stone.Project_stone;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+
+import static project_stone.project_stone.API.Config.doLater;
 
 public class Anchor {
     /*FILE=================================================================================*/
@@ -158,9 +159,9 @@ public class Anchor {
         Location location = player.getLocation();
         for(int i=0;i<wait_time;i++) {
             int finalI = i;
-            BasicStone.doLater(i*20L,()->counter(location,player,wait_time- finalI));
+            doLater(i*20L,()->counter(location,player,wait_time- finalI));
         }
-        BasicStone.doLater(wait_time * 20L, () -> to(player));
+        doLater(wait_time * 20L, () -> to(player));
     }
     public void counter(Location ori_location,Player player,int count_down) {
         if(ori_location.equals(player.getLocation())) {

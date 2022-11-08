@@ -5,6 +5,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import project_stone.project_stone.VoidTech.tools.void_wand.VoidWand;
+
+import static project_stone.project_stone.API.Config.match;
 
 public class System implements CommandExecutor {
     @Override
@@ -22,6 +25,14 @@ public class System implements CommandExecutor {
                             Math.round(((float)(all)/1024)*10.0)/10.0
                             +")GB");
                     return true;
+                }
+            }
+            else if(args.length == 2) {
+                if (args[0].equalsIgnoreCase("give")) {
+                    if(match(args[1],new String[]{"void_wand"})) {
+                        player.getInventory().addItem(new VoidWand().getItemStack());
+                        return true;
+                    }
                 }
             }
         }
