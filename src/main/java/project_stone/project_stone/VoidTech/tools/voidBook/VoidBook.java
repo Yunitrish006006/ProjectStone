@@ -11,6 +11,7 @@ import project_stone.project_stone.VoidTech.Anchor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class VoidBook {
     private Location from;
@@ -41,14 +42,14 @@ public class VoidBook {
         List<ItemStack> points = new ArrayList<>();
         for(String a_name : Anchor.getOwnedAnchorNameList(player)) {
             Anchor anchor = new Anchor().get(a_name);
-            ItemStack temp = new ItemStack(Material.STONE);
+            ItemStack temp = new ItemStack(Objects.requireNonNull(Material.getMaterial(anchor.getIcon().toUpperCase(),true)));
             ItemMeta meta = temp.getItemMeta();
             List<String> lores = new ArrayList<>();
             lores.add("VoidTech:void_book");
             lores.add("purview : " + anchor.getPurview());
             lores.add("gravity : " + anchor.isGravity());
             lores.add("wait time : " + anchor.getWait_time());
-            lores.add("position : " + anchor.getLocationInformation());
+            lores.add("position : " + anchor.getPureLocation());
             assert meta != null;
             meta.setLore(lores);
             meta.setDisplayName(anchor.getAnchor_name());

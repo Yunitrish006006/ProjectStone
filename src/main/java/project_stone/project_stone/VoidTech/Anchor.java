@@ -5,6 +5,7 @@ import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import project_stone.project_stone.API.MessageAPI;
 import project_stone.project_stone.Project_stone;
 
 import java.io.File;
@@ -52,6 +53,7 @@ public class Anchor {
     private boolean gravity;
     private String purview;
     private int wait_time;
+    private String icon;
     private String world;
     private double x;
     private double y;
@@ -72,6 +74,7 @@ public class Anchor {
         wait_time = 0;
         owner = "world";
         uuid = UUID.randomUUID().toString();
+        icon = "STONE";
     }
     public Anchor(String name,Location location) {
         world = Objects.requireNonNull(location.getWorld()).getName();
@@ -86,6 +89,7 @@ public class Anchor {
         wait_time = 3;
         owner = "world";
         uuid = UUID.randomUUID().toString();
+        icon = "STONE";
     }
     public Anchor(String name,Player player) {
         world = player.getWorld().getName();
@@ -100,8 +104,9 @@ public class Anchor {
         wait_time = 3;
         owner = player.getName();
         uuid = player.getUniqueId().toString();
+        icon = "STONE";
     }
-    /*method===============================================================================*/
+    /*methods===============================================================================*/
     public Anchor canEdit(Player player) {
         if(purview.equalsIgnoreCase("none")) {
             player.sendMessage(ChatColor.RED+"You have no permission to do this action!");
@@ -123,7 +128,7 @@ public class Anchor {
         if(uuid.equalsIgnoreCase(player.getUniqueId().toString()) || purview.equalsIgnoreCase("public")) return this;
         return null;
     }
-
+    //set information
     public void setGravity(boolean value) {
         if(world.equalsIgnoreCase("world")) {
             gravity = value;
@@ -148,7 +153,19 @@ public class Anchor {
         anchor_name = value;
         add();
     }
-
+    public void setIcon(String value) {
+        if(Material.getMaterial(value.toUpperCase())!=null) {
+            icon = value;
+            add();
+        }
+        else {
+            Bukkit.getPlayer(owner).sendMessage("wrong value of ICON!");
+        }
+    }
+    //get information
+    public String getIcon() {
+        return icon;
+    }
     public boolean isGravity() {
         return gravity;
     }
@@ -172,25 +189,12 @@ public class Anchor {
         result += ChatColor.BLUE + " " + Math.round(z*100.0)/100.0;
         return result;
     }
-    public void to(Player player) {
-        if(gravity) player.teleport(getHighestBlockAt().safe().getLocation());
-        else player.teleport(this.getLocation());
-        player.playSound(player.getLocation(), Sound.ITEM_CHORUS_FRUIT_TELEPORT, SoundCategory.HOSTILE, 1.0f, 0.2f);
-        player.sendTitle(ChatColor.GOLD + anchor_name, ChatColor.MAGIC + "_________", 10, 10, 10);
-    }
-    public void delayTo(Player player) {
-        Location location = player.getLocation();
-        for(int i=0;i<wait_time;i++) {
-            int finalI = i;
-            doLater(i*20L,()->counter(location,player,wait_time- finalI));
-        }
-        doLater(wait_time * 20L, () -> to(player));
-    }
-    public void counter(Location ori_location,Player player,int count_down) {
-        if(ori_location.equals(player.getLocation())) {
-            player.sendTitle("" + count_down, ChatColor.MAGIC + "_____",10,10,10);
-            player.playSound(player.getLocation(),Sound.ENTITY_ARROW_HIT_PLAYER, SoundCategory.MASTER,0.4f,1.0f);
-        }
+    public String getPureLocation() {
+        String result = "";
+        result += ChatColor.RED + " " + Math.round(x*100.0)/100.0;
+        result += ChatColor.GREEN + " " + Math.round(y*100.0)/100.0;
+        result += ChatColor.BLUE + " " + Math.round(z*100.0)/100.0;
+        return result;
     }
     public Anchor getHighestBlockAt() {
         Location finalPlace = getLocation();
@@ -217,6 +221,27 @@ public class Anchor {
             return null;
         }
     }
+
+    public void to(Player player) {
+        if(gravity) player.teleport(getHighestBlockAt().safe().getLocation());
+        else player.teleport(this.getLocation());
+        player.playSound(player.getLocation(), Sound.ITEM_CHORUS_FRUIT_TELEPORT, SoundCategory.HOSTILE, 1.0f, 0.2f);
+        player.sendTitle(ChatColor.GOLD + anchor_name, ChatColor.MAGIC + "_________", 10, 10, 10);
+    }
+    public void delayTo(Player player) {
+        Location location = player.getLocation();
+        for(int i=0;i<wait_time;i++) {
+            int finalI = i;
+            doLater(i*20L,()->counter(location,player,wait_time- finalI));
+        }
+        doLater(wait_time * 20L, () -> to(player));
+    }
+    public void counter(Location ori_location,Player player,int count_down) {
+        if(ori_location.equals(player.getLocation())) {
+            player.sendTitle("" + count_down, ChatColor.MAGIC + "_____",10,10,10);
+            player.playSound(player.getLocation(),Sound.ENTITY_ARROW_HIT_PLAYER, SoundCategory.MASTER,0.4f,1.0f);
+        }
+    }
     public void setLocation(Location location){
         this.x = location.getX();
         this.y = location.getY();
@@ -238,6 +263,7 @@ public class Anchor {
         config.set(anchor_name+".Z",z);
         config.set(anchor_name+".yaw",yaw);
         config.set(anchor_name+".pitch",pitch);
+        config.set(anchor_name+".icon",icon);
         saveFile();
         return "successfully set a point";
     }
@@ -259,6 +285,7 @@ public class Anchor {
         z = (Double) config.get(name+".Z",z);
         yaw = Float.parseFloat(String.valueOf(config.get(name+".yaw",yaw)));
         pitch = Float.parseFloat(String.valueOf(config.get(name+".pitch",pitch)));
+        icon = String.valueOf(config.get(name+".icon",icon));
         return this;
     }
     public static List<String> getOwnedAnchorNameList(Player player) {

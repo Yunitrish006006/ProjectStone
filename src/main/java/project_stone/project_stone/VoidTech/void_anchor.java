@@ -57,15 +57,15 @@ public class void_anchor implements CommandExecutor {
                         return true;
                     }
                 }
-                case 3: {
-                    if (match(args[0], "set")) {
-                        Anchor temp = new Anchor().get(args[1]);
-                        if (match(args[2], new String[]{"public", "private"})) {
-                            temp.setPurview(args[2]);
-                        }
-                        return true;
-                    }
-                }
+//                case 3: {
+//                    if (match(args[0], "set")) {
+//                        Anchor temp = new Anchor().get(args[1]);
+//                        if (match(args[2], new String[]{"public", "private"})) {
+//                            temp.setPurview(args[2]);
+//                        }
+//                        return true;
+//                    }
+//                }
                 case 4: {
                     if(match(args[0],"set")) {
                         Anchor temp = new Anchor().get(args[1]);
@@ -85,6 +85,10 @@ public class void_anchor implements CommandExecutor {
                         }
                         else if(match(args[2],"name")){
                             temp.setAnchor_name(args[3]);
+                            return true;
+                        }
+                        else if(match(args[2],"icon")){
+                            temp.setIcon(args[3]);
                             return true;
                         }
                     }

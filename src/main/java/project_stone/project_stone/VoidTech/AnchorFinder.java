@@ -63,6 +63,7 @@ public class AnchorFinder implements TabCompleter {
                             temp.add("purview");
                             temp.add("wait_time");
                             temp.add("name");
+                            temp.add("icon");
                             return temp;
                         }
                     }
