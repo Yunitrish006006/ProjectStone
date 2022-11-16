@@ -42,7 +42,7 @@ public class VoidBook {
         List<ItemStack> points = new ArrayList<>();
         for(String a_name : Anchor.getOwnedAnchorNameList(player)) {
             Anchor anchor = new Anchor().get(a_name);
-            ItemStack temp = new ItemStack(Objects.requireNonNull(Material.getMaterial(anchor.getIcon().toUpperCase(),true)));
+            ItemStack temp = new ItemStack(Objects.requireNonNull(Material.getMaterial(anchor.getIcon().toUpperCase())));
             ItemMeta meta = temp.getItemMeta();
             List<String> lores = new ArrayList<>();
             lores.add("VoidTech:void_book");
