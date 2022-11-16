@@ -20,4 +20,11 @@ public class TextAPI {
     public static String keyAndValueText(String key,String value) {
         return ChatColor.RESET + "" + ChatColor.GRAY + key + " : " + ChatColor.GREEN + value;
     }
+    public static String toRawText(String value) {
+        for(ChatColor colors : ChatColor.values()) {
+            value = value.replace((CharSequence) colors,"");
+            sendTest(colors+"*");
+        }
+        return value;
+    }
 }

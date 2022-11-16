@@ -21,6 +21,7 @@ public class OnUsingVoidWand implements Listener {
     @EventHandler
     public void onUse(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        if(!event.hasItem()) return;
         if (!Config.matchItemValue(event.getItem(),new VoidWand().getItemStack())) return;
         if(!isInteractBlockWithMainHandOn(event)) return;
         //test if using

@@ -121,7 +121,6 @@ public class Anchor {
     public Anchor canTeleport(Player player) {
         if(purview.equalsIgnoreCase("none")) {
             player.sendMessage(ChatColor.RED+"You have no permission to do this action!");
-            player.sendMessage(ChatColor.MAGIC+"我肏你媽");
             return new Anchor();
         }
         if(uuid.equalsIgnoreCase(player.getUniqueId().toString()) || purview.equalsIgnoreCase("public")) return this;
@@ -148,7 +147,7 @@ public class Anchor {
     }
     public void setAnchor_name(String value) {
         del();
-        Objects.requireNonNull(Bukkit.getPlayer(owner)).sendMessage(ChatColor.GREEN + "Update"+anchor_name+"'s name to " + value);
+        Objects.requireNonNull(Bukkit.getPlayer(owner)).sendMessage(ChatColor.GREEN + "Update "+anchor_name+"'s name to " + value);
         anchor_name = value;
         add();
     }
