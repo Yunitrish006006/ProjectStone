@@ -20,13 +20,50 @@ public class SystemTabCompleter implements TabCompleter {
                     List<String> options = new ArrayList<>();
                     options.add("memory");
                     options.add("give");
+                    options.add("version");
+                    options.add("PlayerData");
+                    options.add("world");
                     return options;
                 }
                 case 2: {
                     if(match(args[0],"give")) {
                         List<String> options = new ArrayList<>();
                         options.add("void_wand");
+                        options.add("void_book");
                         return options;
+                    }
+                    else if (match(args[0],"PlayerData")) {
+                        List<String> options = new ArrayList<>();
+                        options.add("set");
+                        options.add("get");
+                        return options;
+                    }
+                    else if (match(args[0],"World")) {
+                        List<String> options = new ArrayList<>();
+                        options.add("add");
+                        options.add("toSpawn");
+                        options.add("del");
+                        return options;
+                    }
+                }
+                case 3: {
+                    if (match(args[0],"World")) {
+                        switch (args[1]) {
+                            case "add": {
+                                StringBuilder x = new StringBuilder();
+                                for(int i=0;i<16;i++) {
+                                    x.append((char) ('a' + (Math.random() * 26)));
+                                }
+                                List<String> random_id = new ArrayList<>();
+                                random_id.add(x.toString());
+                                return random_id;
+                            }
+                            case "del":
+                            case "toSpawn": {
+                                return WorldManager.getWorldList();
+                            }
+                        }
+
                     }
                 }
             }

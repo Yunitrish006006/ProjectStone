@@ -143,13 +143,27 @@ public class Anchor {
         add();
     }
     public void setAnchor_name(String value) {
-        //0987301813
         del();
         Objects.requireNonNull(Bukkit.getPlayer(owner)).sendMessage(ChatColor.GREEN + "Update"+anchor_name+"'s name to " + value);
         anchor_name = value;
         add();
     }
 
+    public boolean isGravity() {
+        return gravity;
+    }
+    public int getWait_time() {
+        return wait_time;
+    }
+    public String getPurview() {
+        return purview;
+    }
+    public String getAnchor_name() {
+        return anchor_name;
+    }
+    public String getPosition() {
+        return  "("+Math.round(x*100.0)/100.0+","+Math.round(y*100.0)/100.0+","+Math.round(z*100.0)/100.0+")";
+    }
     public String getLocationInformation() {
         String result = "";
         result += ChatColor.GOLD + " " + anchor_name;
@@ -272,6 +286,11 @@ public class Anchor {
     public static List<String> getAnchorNameList() {
         String[] keys = Objects.requireNonNull(config).getKeys(false).toArray(new String[config.getKeys(false).size()]);
         return new ArrayList<>(Arrays.asList(keys));
+    }
+    public Anchor getAnchor(String name, Player player) {
+        Anchor anchor = new Anchor();
+        anchor.get(name);
+        return this;
     }
     /*=====================================================================================*/
 }

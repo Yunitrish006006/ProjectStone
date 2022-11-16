@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitScheduler;
 import project_stone.project_stone.Project_stone;
 
@@ -110,5 +111,13 @@ public class Config {
     public static void doLater(Long time,Runnable content) {
         BukkitScheduler scheduler = Bukkit.getScheduler();
         scheduler.runTaskLater(Project_stone.getPlugin(),content,time);
+    }
+
+    public static boolean matchItemValue(ItemStack i1,ItemStack i2) {
+        ItemStack temp1 = i1.clone();
+        ItemStack temp2 = i2.clone();
+        temp1.setAmount(1);
+        temp2.setAmount(1);
+        return temp1.equals(temp2);
     }
 }
