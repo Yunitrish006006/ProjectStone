@@ -8,7 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import project_stone.project_stone.API.Config;
-import project_stone.project_stone.API.MessageAPI;
+import project_stone.project_stone.API.TextAPI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class WorldManager implements Listener {
         if(Config.getConfig().get("Worlds")!=null) {
              List<String> names = new ArrayList<>(Objects.requireNonNull(Config.getConfig().getConfigurationSection("Worlds")).getKeys(false));
              for(String name : names) {
-                 MessageAPI.sendTest(name);
+                 TextAPI.sendTest(name);
                  worlds.add(Bukkit.getWorld(name));
              }
         }

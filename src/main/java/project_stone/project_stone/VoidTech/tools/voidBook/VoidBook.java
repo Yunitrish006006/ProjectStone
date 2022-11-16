@@ -1,17 +1,21 @@
 package project_stone.project_stone.VoidTech.tools.voidBook;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import project_stone.project_stone.API.TextAPI;
 import project_stone.project_stone.VoidTech.Anchor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import static project_stone.project_stone.API.TextAPI.keyAndValueText;
 
 public class VoidBook {
     private Location from;
@@ -45,14 +49,14 @@ public class VoidBook {
             ItemStack temp = new ItemStack(Objects.requireNonNull(Material.getMaterial(anchor.getIcon().toUpperCase())));
             ItemMeta meta = temp.getItemMeta();
             List<String> lores = new ArrayList<>();
-            lores.add("VoidTech:void_book");
-            lores.add("purview : " + anchor.getPurview());
-            lores.add("gravity : " + anchor.isGravity());
-            lores.add("wait time : " + anchor.getWait_time());
-            lores.add("position : " + anchor.getPureLocation());
+            lores.add(keyAndValueText("VoidTech","void_book"));
+            lores.add(keyAndValueText("purview",anchor.getPurview()));
+            lores.add(keyAndValueText("gravity",String.valueOf(anchor.isGravity())));
+            lores.add(keyAndValueText("wait time",String.valueOf(anchor.getWait_time())));
+            lores.add(keyAndValueText("position",anchor.getPureLocation()));
             assert meta != null;
             meta.setLore(lores);
-            meta.setDisplayName(anchor.getAnchor_name());
+            meta.setDisplayName(ChatColor.RESET+anchor.getAnchor_name());
             temp.setItemMeta(meta);
             points.add(temp);
         }

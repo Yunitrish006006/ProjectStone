@@ -15,7 +15,7 @@ import org.bukkit.util.Vector;
 import project_stone.project_stone.API.Config;
 
 import static project_stone.project_stone.API.Config.*;
-import static project_stone.project_stone.API.MessageAPI.sendActionBar;
+import static project_stone.project_stone.API.TextAPI.sendActionBar;
 
 public class OnUsingVoidWand implements Listener {
     @EventHandler

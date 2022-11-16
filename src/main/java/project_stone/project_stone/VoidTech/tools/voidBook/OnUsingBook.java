@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import project_stone.project_stone.API.MessageAPI;
+import project_stone.project_stone.API.TextAPI;
 import project_stone.project_stone.VoidTech.Anchor;
 
 import java.util.Objects;
@@ -27,7 +27,7 @@ public class OnUsingBook implements Listener {
         ItemStack itemStack = Objects.requireNonNull(event.getCurrentItem()).clone();
         if("VoidTech:void_book".equalsIgnoreCase(itemStack.getItemMeta().getLore().get(0))) {
             Anchor anchor = new Anchor().get(itemStack.getItemMeta().getDisplayName());
-            MessageAPI.sendTest(anchor.getAnchor_name());
+            TextAPI.sendTest(anchor.getAnchor_name());
             anchor.canTeleport(player).delayTo(player);
             player.closeInventory();
             event.setCancelled(true);

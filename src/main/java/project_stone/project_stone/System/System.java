@@ -6,7 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import project_stone.project_stone.API.MessageAPI;
+import project_stone.project_stone.API.TextAPI;
 import project_stone.project_stone.API.StatusAPI;
 import project_stone.project_stone.Project_stone;
 import project_stone.project_stone.VoidTech.tools.voidBook.VoidBook;
@@ -68,7 +68,7 @@ public class System implements CommandExecutor {
                         case "get":{
                             List<String> temp = StatusAPI.getPlayerNBT(player);
                             for(String s : temp) {
-                                MessageAPI.sendTest(s);
+                                TextAPI.sendTest(s);
                             }
                             return true;
                         }
