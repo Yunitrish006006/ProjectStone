@@ -103,7 +103,7 @@ public class Anchor {
         wait_time = 3;
         owner = player.getName();
         uuid = player.getUniqueId().toString();
-        icon = "STONE";
+        icon = "stone";
     }
     /*methods===============================================================================*/
     public Anchor canEdit(Player player) {

@@ -4,11 +4,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import project_stone.project_stone.VoidTech.Anchor;
@@ -32,23 +30,39 @@ public class VoidBook {
         List<String> lore = new ArrayList<>();
         lore.add("a book that can bring u anywhere");
         itemMeta.setLore(lore);
+        itemMeta.setLocalizedName("ProjectStone:anchor,void_book");
         itemStack.setItemMeta(itemMeta);
     }
     public Inventory GUI_hub(Player player) {
         Inventory main = Bukkit.createInventory(null,36,"Teleport Hub");
         main.setContents(points(player).toArray(new ItemStack[0]));
+        ItemStack add = new ItemStack(Material.NAME_TAG);
+        ItemMeta add_meta = add.getItemMeta();
+        assert add_meta != null;
+        add_meta.setDisplayName("add unit");
+        add_meta.setLocalizedName("ProjectStone:anchor,add_unit");
+        add.setItemMeta(add_meta);
+        main.addItem(add);
         return main;
     }
     public Inventory GUI_set(Anchor anchor) {
         Inventory main = Bukkit.createInventory(null,9,anchor.getAnchor_name()+" Setting");
 
         ItemStack name = new ItemStack(Material.NAME_TAG);
-        ItemMeta meta = name.getItemMeta();
-        meta.setDisplayName("SetName");
-        meta.setLocalizedName("ProjectStone:anchor,set_name,"+anchor.getAnchor_name());
-        name.setItemMeta(meta);
-
+        ItemMeta name_meta = name.getItemMeta();
+        assert name_meta != null;
+        name_meta.setDisplayName("SetName");
+        name_meta.setLocalizedName("ProjectStone:anchor,set_name,"+anchor.getAnchor_name());
+        name.setItemMeta(name_meta);
         main.setItem(1,name);
+
+        ItemStack delete = new ItemStack(Material.FLINT_AND_STEEL);
+        ItemMeta delete_meta = delete.getItemMeta();
+        assert delete_meta != null;
+        delete_meta.setDisplayName("Delete");
+        delete_meta.setLocalizedName("ProjectStone:anchor,delete,"+anchor.getAnchor_name());
+        delete.setItemMeta(delete_meta);
+        main.setItem(2,delete);
         return main;
     }
     public Inventory GUI_set_name(Anchor anchor) {

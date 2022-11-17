@@ -19,7 +19,7 @@ public class OnUsingBook implements Listener {
         }
     }
     @EventHandler
-    public void onTeleportPointClicked(InventoryClickEvent event) {
+    public void onGUIClicked(InventoryClickEvent event) {
         VoidBook voidBook = new VoidBook();
         Player player = (Player) event.getWhoClicked();
         ItemStack itemStack = event.getCurrentItem().clone();
@@ -35,6 +35,12 @@ public class OnUsingBook implements Listener {
                     anchor.setAnchor_name(itemStack.getItemMeta().getDisplayName());
                     player.closeInventory();
                 }
+                else if(itemStack.getItemMeta().getLocalizedName().split(",")[1].equalsIgnoreCase("add_unit")) {
+                    Anchor anchor = new Anchor("temp",player);
+                    anchor.setLocation(player.getLocation());
+                    anchor.add();
+                    player.closeInventory();
+                }
             } else if (event.getClick().equals(ClickType.RIGHT)) {
                 if(itemStack.getItemMeta().getLocalizedName().split(",")[1].equalsIgnoreCase("unit")) {
                     Anchor anchor = new Anchor().get(itemStack.getItemMeta().getLocalizedName().split(",")[2]);
@@ -43,6 +49,11 @@ public class OnUsingBook implements Listener {
                 else if(itemStack.getItemMeta().getLocalizedName().split(",")[1].equalsIgnoreCase("set_name")) {
                     Anchor anchor = new Anchor().get(itemStack.getItemMeta().getLocalizedName().split(",")[2]);
                     player.openInventory(voidBook.GUI_set_name(anchor));
+                }
+                else if(itemStack.getItemMeta().getLocalizedName().split(",")[1].equalsIgnoreCase("delete")) {
+                    Anchor anchor = new Anchor().get(itemStack.getItemMeta().getLocalizedName().split(",")[2]);
+                    anchor.del();
+                    player.closeInventory();
                 }
             }
             event.setCancelled(true);
