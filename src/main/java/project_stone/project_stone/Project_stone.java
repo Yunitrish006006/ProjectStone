@@ -1,5 +1,6 @@
 package project_stone.project_stone;
 import org.bukkit.plugin.java.JavaPlugin;
+import project_stone.project_stone.API.DiscordWebhook;
 import project_stone.project_stone.DTech.onShoot;
 import project_stone.project_stone.System.SystemTabCompleter;
 import project_stone.project_stone.System.WorldManager;
@@ -12,13 +13,13 @@ import project_stone.project_stone.System.System;
 import project_stone.project_stone.commands.fly;
 import project_stone.project_stone.commands.hat;
 import project_stone.project_stone.commands.light;
-import project_stone.project_stone.events.OnCreeperExplode;
-import project_stone.project_stone.events.OnPlayerDeath;
-import project_stone.project_stone.events.OnPlayerFished;
+import project_stone.project_stone.events.*;
 
 import java.util.Objects;
 
 public final class Project_stone extends JavaPlugin {
+
+    private String webhook_url = "https://discord.com/api/webhooks/1068513559446835301/rk4Tpe_Wy0JTbbiAzWVXqZsDRH3QpoMWBqx67fw28V7ZmhGtpVbGW7m6pqOQxEuAt70Z";
 
     private static Project_stone plugin;
     public static Project_stone getPlugin() {
@@ -31,6 +32,14 @@ public final class Project_stone extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
+        DiscordWebhook webhook = new DiscordWebhook(webhook_url);
+        webhook.addEmbed(new DiscordWebhook.EmbedObject().setDescription("server is starting"));
+        try {
+            webhook.execute();
+        }
+        catch (java.io.IOException e){
+            getLogger().severe(e.getStackTrace().toString());
+        }
         this.saveDefaultConfig();
         Anchor.initialize();
         WorldManager.initial();
@@ -47,9 +56,19 @@ public final class Project_stone extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new onShoot(),this);
         getServer().getPluginManager().registerEvents(new OnCreeperExplode(),this);
         getServer().getPluginManager().registerEvents(new OnUsingVoidWand(),this);
+        getServer().getPluginManager().registerEvents(new OnPlayerPortal(),this);
+        getServer().getPluginManager().registerEvents(new OnPlayerChat(),this);
     }
 
     @Override
     public void onDisable() {
+        DiscordWebhook webhook = new DiscordWebhook(webhook_url);
+        webhook.addEmbed(new DiscordWebhook.EmbedObject().setDescription("server shutting down"));
+        try {
+            webhook.execute();
+        }
+        catch (java.io.IOException e){
+            getLogger().severe(e.getStackTrace().toString());
+        }
     }
 }
