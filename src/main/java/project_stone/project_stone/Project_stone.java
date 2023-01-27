@@ -52,5 +52,4 @@ public final class Project_stone extends JavaPlugin {
     @Override
     public void onDisable() {
     }
-
 }

@@ -68,15 +68,9 @@ public class VoidBook {
     public Inventory GUI_set_name(Anchor anchor) {
         Inventory window = Bukkit.createInventory(null,InventoryType.ANVIL, "Enter Name");
 
-        ItemStack temp = new ItemStack(Objects.requireNonNull(Material.getMaterial(anchor.getIcon().toUpperCase())));
+        ItemStack temp = new ItemStack(Objects.requireNonNull(Material.BOOK));
         ItemMeta meta = temp.getItemMeta();
-        List<String> lores = new ArrayList<>();
-        lores.add(keyAndValueText("purview",anchor.getPurview()));
-        lores.add(keyAndValueText("gravity",String.valueOf(anchor.isGravity())));
-        lores.add(keyAndValueText("wait time",String.valueOf(anchor.getWait_time())));
-        lores.add(keyAndValueText("position",anchor.getPureLocation()));
         assert meta != null;
-        meta.setLore(lores);
         meta.setLocalizedName("ProjectStone:anchor,modify_unit,"+anchor.getAnchor_name());
         meta.setDisplayName(ChatColor.RESET+anchor.getAnchor_name());
         temp.setItemMeta(meta);
